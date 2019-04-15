@@ -1,14 +1,21 @@
 # PHASE 2
 def convert_to_int(str)
-  Integer(str)
+  begin
+    Integer(str)
+  rescue ArgumentError => e
+    return nil
+  end
 end
 
 # PHASE 3
+class CoffeeError < StandardError ;end 
 FRUITS = ["apple", "banana", "orange"]
 
 def reaction(maybe_fruit)
   if FRUITS.include? maybe_fruit
     puts "OMG, thanks so much for the #{maybe_fruit}!"
+  elsif maybe_fruit == 'coffee'
+    raise CoffeeError  
   else 
     raise StandardError 
   end 
@@ -17,14 +24,27 @@ end
 def feed_me_a_fruit
   puts "Hello, I am a friendly monster. :)"
 
-  puts "Feed me a fruit! (Enter the name of a fruit:)"
-  maybe_fruit = gets.chomp
-  reaction(maybe_fruit) 
+  # puts "Feed me a fruit! (Enter the name of a fruit:)"
+  # maybe_fruit = gets.chomp
+
+  begin
+    puts "Feed me a fruit! (Enter the name of a fruit:)"
+    maybe_fruit = gets.chomp
+    reaction(maybe_fruit)
+  rescue CoffeeError => e
+    puts 'Not a fruit, but try again'
+    retry 
+  end 
+  
+
 end  
 
 # PHASE 4
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
+    raise "A BestFriend instance must have a name" if (!name.is_a?(String)) || name.length == 0
+    raise "A BestFriend instance must know you for more than 5 years" if yrs_known < 5
+    raise "A BestFriend instance must have a favorite pastime." if (!fav_pastime.is_a?(String)) || fav_pastime.length == 0
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
