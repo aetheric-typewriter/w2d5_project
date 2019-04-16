@@ -65,6 +65,11 @@ class Board
         end 
     end 
 
+    def valid_pos?(pos)
+        i, j = pos 
+        (0..7).include?(i) && (0..7).include?(j) 
+    end 
+
 end 
 
 

@@ -79,17 +79,8 @@ class Cursor
     case key  
     when :return, :space 
         return @cursor_pos 
-    when :up, :down, :left, :right  #CHECK THIS
-        update_pos(moves[key])
-        
-    # when :down  
-    #     update_pos(moves[key])
-        
-    # end :left 
-    # update_pos(moves[key])
-
-    # when :right  
-        
+    when :up, :down, :left, :right  
+        update_pos(MOVES[key])
     when :ctrl_c 
         Process.exit 
     end 
@@ -97,5 +88,12 @@ class Cursor
   end
 
   def update_pos(diff)
+    new_pos = [@cursor_pos[0] + diff[0], @cursor_pos[1] + diff[1]]
+    if board.valid_pos?(new_pos)
+      @cursor_pos = new_pos
+    else
+      puts diff
+      raise "argument diff is invalid for method call of update_pos"
+    end 
   end
 end
