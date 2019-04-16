@@ -12,7 +12,9 @@ module Steppable
 
             board = self.board
             
-            next_pos.select { |el| board.valid_pos?(el) }
+            next_pos = next_pos.select { |el| board.valid_pos?(el) }
+            next_pos.select { |el| board[el].color != self.color }
+
         elsif self.is_a?(Knight)
             current_pos = self.pos
             next_pos = KNIGHT_DELTAS.map do |ele|  
@@ -22,6 +24,8 @@ module Steppable
             board = self.board
             
             next_pos.select { |el| board.valid_pos?(el) }
+            next_pos.select { |el| board[el].color != self.color }
+
         end 
     end
 
